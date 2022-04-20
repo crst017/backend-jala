@@ -1,0 +1,25 @@
+{
+  "name": "test0408-tstest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "npx ts-node ./src/index.ts",
+    "debugFunctions": "npx ts-node ./src/functions.ts",
+    "lint": "npx eslint ./src/index.ts"
+  },
+  "author": "Cristian Navarro León <cristiannl.0117@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0"
+  }
+}
