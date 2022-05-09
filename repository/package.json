@@ -1,0 +1,23 @@
+{
+  "name": "repository",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Cristian Navarro León <cristiannl.0117@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@types/inversify": "^2.0.33",
+    "@types/mongodb": "^4.0.7",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "mongodb": "^4.5.0",
+    "reflect-metadata": "^0.1.13"
+  }
+}

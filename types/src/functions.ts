@@ -80,5 +80,58 @@
 // console.log(numbers.next());
 // console.log(numbers.next());
 
+// ITERATOR 
+
+// let numbers = {
+//     *[Symbol.iterator]() {
+//         for (let n = 0; n < 10; n++) {
+//             yield n;
+//         }
+//     }
+// };
+
+// for (const number of numbers) {
+//     console.log(number);
+// }
+// const allNumbers = [...numbers];
+// let [one, two, ...rest] = numbers;
+
+// console.log(numbers);
+
+// CALL SIGNATURES
+
+// function sum( a:number, b: number): number {
+//     return a + b;
+// }
+
+// type myFun = ( a:number, b: number) => number;
+
+// type Log = ( message: string, userid?: string) => void;
+
+// type Log2 = {
+//     ( message: string, userid?: string): void;
+// }
+
+// OVERLOADED FUNCTIONS
+
+// class Reservation {
+//     constructor() {
+
+//     }
+// }
+
+// type Reserve = {
+//     (from: Date, to: Date, destination: string): Reservation
+//     (from: Date, destination: string): Reservation
+// }
 
 
+// let reserve: Reserve = ( from: Date, to: Date | string, destination?: string): Reservation => {
+//     return new Reservation();
+// };
+
+// const myReservation = reserve(new Date(), new Date(), 'COL');
+// const myReservation2 = reserve(new Date(), 'COL');
+// const myReservation3 = reserve(new Date(), 'COL');
+
+// OVERLOADED FUNCTION TYPES
