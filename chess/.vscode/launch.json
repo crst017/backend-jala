@@ -17,6 +17,19 @@
                 "<node_internals>/**"
             ],
             "type": "node"
+        },
+        {
+            "name": "Debug test",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
         }
     ]
 }

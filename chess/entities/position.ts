@@ -10,8 +10,8 @@ export default class Position {
     getFile() {
         return this.file.charCodeAt(0);
     }
+    
     getRank() {
         return this.rank;
     }
-       
 }
