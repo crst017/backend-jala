@@ -14,12 +14,20 @@ export default class Game {
     
     gameTurn: boolean;
 
-    constructor() {
-        this.createPieces()
+    constructor( predefinedPieces ?: any) {
+
+        predefinedPieces.length > 0 ? 
+            this.createPredefinedPieces( predefinedPieces ) : 
+            this.createDefaultPieces();
+
         this.gameTurn = true;
     }
 
-    private createPieces() {
+    private createPredefinedPieces( ...predefinedPieces: Piece[]) {
+        predefinedPieces.forEach( piece => this.pieces.push(piece))
+    }
+    
+    private createDefaultPieces() {
         this.pieces.push(new Rook('White','A',1))
         this.pieces.push(new Rook('White','H',1))        
         this.pieces.push(new Knight('White','B',1))
@@ -62,26 +70,24 @@ export default class Game {
         return Game.instance;
     }
 
+    public static customGame( ...pieces : Piece[]): Game {
+
+        Game.instance = new Game( pieces );
+        return Game.instance;
+    }
+
     showGame(): Piece[] {
         return this.pieces;
     }
 
     resetGame(): void {
         this.pieces = [];
-        this.createPieces();
+        this.createDefaultPieces();
         this.gameTurn = true;
     }
 
     getGameTurn(): string {
         return this.gameTurn ? 'White' : 'Black'
-    }
-
-    seValidaElMovimient() {
-
-        // validaciones
-        // La ficha recibida en el body corresponde al turno asignado
-        // asigna la nueva posicion
-        // changeTurn()
     }
 
     findPiece( position: any ) {

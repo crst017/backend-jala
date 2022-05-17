@@ -11,17 +11,21 @@ import { Color, Status } from "./types";
 export default class Game {
 
     private static instance: Game;
+    status: Status = 'Ready to start';
+    gameTurn: boolean;
     private pieces: Piece[] = [];
     
-    gameTurn: boolean;
-    status: Status = 'Ready to start';
 
-    constructor() {
-        this.createPieces()
+    constructor( ...predefinedPieces : Piece[]) {
+
+        predefinedPieces.length > 0 ? 
+            this.createPredefinedPieces( predefinedPieces ) : 
+            this.createDefaultPieces();
+
         this.gameTurn = true;
     }
 
-    private createPieces() {
+    private createDefaultPieces() {
         this.pieces.push(new Rook('White','A',1))
         this.pieces.push(new Rook('White','H',1))        
         this.pieces.push(new Knight('White','B',1))
@@ -57,9 +61,13 @@ export default class Game {
         this.pieces.push(new Pawn('Black','H',7))
     }
 
-    public static getGame(): Game {
+    private createPredefinedPieces( predefinedPieces: Piece[]) {
+        predefinedPieces.forEach( piece => this.pieces.push(piece))
+    }
+
+    public static getGame( ...predefinedPieces : Piece[]): Game {
         if (!Game.instance) {
-            Game.instance = new Game();
+            Game.instance = new Game( ...predefinedPieces );
         }
         return Game.instance;
     }
@@ -78,13 +86,17 @@ export default class Game {
 
     resetGame(): void {
         this.pieces = [];
-        this.createPieces();
+        this.createDefaultPieces();
         this.gameTurn = true;
         this.status = 'Ready to start';
     }
 
     getGameTurn(): string {
         return this.gameTurn ? 'White' : 'Black'
+    }
+    
+    getPieces() {
+        return this.pieces
     }
 
     getBlackPieces(): Piece[] {
@@ -122,20 +134,4 @@ export default class Game {
         }) 
         return king?.getPosition() || false
     }
-
-    // verifyCheck( piece: Piece, position: Position) : boolean {
-    //     const color = piece.getPieceColor();
-    //     const game = Game.getGame();
-    //     const kingPosition = this.findKingPosition( color );
-
-    //     let allowedToMove = true;
-    //     const oponentPieces = color == 'White' ? game.getBlackPieces() : game.getWhitePieces();
-    //     oponentPieces.forEach( piece => {
-    //         if(!( piece instanceof King)) {
-    //             if ( piece.canMove(position) ) allowedToMove = false; // Check for all pieces but King
-    //         }
-    //     })
-
-    //     return true
-    // }
 }
