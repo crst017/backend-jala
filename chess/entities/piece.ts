@@ -30,7 +30,7 @@ export default abstract class Piece {
     }
     
     capturedPiece() {
-        !this.isCaptured 
+        this.isCaptured = !this.isCaptured 
     }
 
     moveForward( position: Position, module : number = 8) {
@@ -92,6 +92,140 @@ export default abstract class Piece {
             return moved
         }
         return moved
+    }
+
+    calculateVerticalPath(position: Position) : Position[] {
+
+        let trajectory: Position[] = [];
+        const current = this.position;
+        const currentRank = this.position.getRank();
+        const final = position;
+
+        if ( current.getFile() == final.getFile() ) {
+            const value = final.getRank() - current.getRank();
+            const direction = value > 0 ? true : false;
+            const numberOfPositions = Math.abs(value);
+            console.log(value, direction, numberOfPositions)
+            if( direction ) {
+                for (let i = currentRank; i <= currentRank + numberOfPositions; i++) {
+                    const setFile = this.getPieceFile() as File;
+                    const newPosition = new Position(setFile, i )
+                    trajectory.push(newPosition)
+                }
+            } else {
+                for (let i = currentRank; i >= currentRank - numberOfPositions; i--) {
+                    const setFile = this.getPieceFile() as File;
+                    const newPosition = new Position(setFile, i )
+                    trajectory.push(newPosition)
+                }
+            }
+        }
+
+        trajectory.shift();
+        return trajectory
+    }
+
+    calculateHorizontalPath(position: Position) : Position[] {
+
+        let trajectory: Position[] = [];
+        const current = this.position;
+        const currentFile = this.position.getFile();
+        const final = position;
+
+        if ( current.getRank() == final.getRank() ) {
+
+            const value = final.getFile() - current.getFile();
+            const direction = value > 0 ? true : false;
+            const numberOfPositions = Math.abs(value);
+            console.log(value, direction, numberOfPositions)
+            if( direction ) {
+                for (let i = currentFile; i <= currentFile + numberOfPositions; i++) {
+                    const setRank = this.getPieceRank() as Rank;
+                    const setFile = String.fromCharCode(i) as File
+                    const newPosition = new Position( setFile , setRank )
+                    trajectory.push(newPosition)
+                }
+            } else {
+                for (let i = currentFile; i >= currentFile - numberOfPositions; i--) {
+                    const setRank = this.getPieceRank() as Rank;
+                    const setFile = String.fromCharCode(i) as File
+                    const newPosition = new Position( setFile , setRank )
+                    trajectory.push(newPosition)
+                }
+            }
+        }
+
+        trajectory.shift();
+        return trajectory
+    }
+
+    calculateDiagionalPath(position: Position) : Position[] {
+        let trajectory: Position[] = [];
+        const current = this.position;
+        const currentFile = this.position.getFile();
+        const currentRank = this.position.getRank();
+        const final = position;
+        
+        const valueY = final.getRank() - current.getRank();
+        const valueX = final.getFile() - current.getFile();
+
+        const verticalDirection = valueY > 0 ? true : false;
+        const horizontalDirection = valueX > 0 ? true : false;
+
+        const numberOfPositions = Math.abs(valueX);
+        
+        // if ( current.getRank() == final.getRank() ) {
+        
+        console.log(numberOfPositions, valueX, valueY,'**',horizontalDirection, verticalDirection)
+        
+        // UP RIGHT
+        if ( verticalDirection && horizontalDirection) {
+
+            for (let i = 1; i < numberOfPositions + 1; i++) {
+                
+                const setRank = (currentRank + i) as Rank;
+                const setFile = String.fromCharCode(currentFile + i) as File;
+                const newPosition = new Position( setFile, setRank )
+                trajectory.push(newPosition);
+            }
+        }
+
+        // UP LEFT
+        if ( verticalDirection && !horizontalDirection) {
+            console.log('up left')
+            for (let i = 1; i < numberOfPositions + 1; i++) {
+                
+                const setRank = (currentRank + i) as Rank;
+                const setFile = String.fromCharCode(currentFile - i) as File;
+                const newPosition = new Position( setFile, setRank )
+                trajectory.push(newPosition);
+            }
+        }
+
+        // BACK RIGHT
+        if ( !verticalDirection && horizontalDirection) {
+
+            for (let i = 1; i < numberOfPositions + 1; i++) {
+                
+                const setRank = (currentRank - i) as Rank;
+                const setFile = String.fromCharCode(currentFile + i) as File;
+                const newPosition = new Position( setFile, setRank )
+                trajectory.push(newPosition);
+            }
+        }
+
+        // BACK LEFT
+        if ( !verticalDirection && !horizontalDirection) {
+
+            for (let i = 1; i < numberOfPositions + 1; i++) {
+                
+                const setRank = (currentRank - i) as Rank;
+                const setFile = String.fromCharCode(currentFile - i) as File;
+                const newPosition = new Position( setFile, setRank )
+                trajectory.push(newPosition);
+            }
+        }
+        return trajectory
     }
 
     abstract canMove(position: Position): boolean;
