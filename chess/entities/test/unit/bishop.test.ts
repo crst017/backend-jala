@@ -1,7 +1,9 @@
 import Position from '../../position';
 import Bishop from '../../bishop';
+import Game from '../../game';
 
 let bishop = new Bishop('White','E',4);
+Game.getGame(bishop);
 
 it( 'Should move front right 1 place' , () => {
     let position = new Position('F',5);

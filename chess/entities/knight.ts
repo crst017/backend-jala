@@ -4,10 +4,21 @@ import Position from './position';
 
 export default class Knight extends Piece {
 
+    checkLock( position : Position): boolean {
+        const positionIsOccupied = position.positionIsOccupied();
+        return positionIsOccupied
+    }
+
     canMove(position: Position): boolean {
-        return (
+
+        const movementIsLocked = this.checkLock( position )
+        const movementRules = 
             (this.moveForward( position, 2) && this.moveSide(position, 1)) ||
             (this.moveForward( position, 1) && this.moveSide(position, 2))
+
+        return (
+            !movementIsLocked && 
+            movementRules
         );
     }
 

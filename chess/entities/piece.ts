@@ -14,7 +14,7 @@ export default abstract class Piece {
     }
 
     getPosition() {
-        return `( ${String.fromCharCode(this.position.getFile())} - ${this.position.getRank()} )`
+        return this.position
     }
 
     getPieceRank() {
@@ -105,7 +105,6 @@ export default abstract class Piece {
             const value = final.getRank() - current.getRank();
             const direction = value > 0 ? true : false;
             const numberOfPositions = Math.abs(value);
-            console.log(value, direction, numberOfPositions)
             if( direction ) {
                 for (let i = currentRank; i <= currentRank + numberOfPositions; i++) {
                     const setFile = this.getPieceFile() as File;
@@ -137,7 +136,6 @@ export default abstract class Piece {
             const value = final.getFile() - current.getFile();
             const direction = value > 0 ? true : false;
             const numberOfPositions = Math.abs(value);
-            console.log(value, direction, numberOfPositions)
             if( direction ) {
                 for (let i = currentFile; i <= currentFile + numberOfPositions; i++) {
                     const setRank = this.getPieceRank() as Rank;
@@ -159,7 +157,7 @@ export default abstract class Piece {
         return trajectory
     }
 
-    calculateDiagionalPath(position: Position) : Position[] {
+    calculateDiagonalPath(position: Position) : Position[] {
         let trajectory: Position[] = [];
         const current = this.position;
         const currentFile = this.position.getFile();
@@ -173,10 +171,6 @@ export default abstract class Piece {
         const horizontalDirection = valueX > 0 ? true : false;
 
         const numberOfPositions = Math.abs(valueX);
-        
-        // if ( current.getRank() == final.getRank() ) {
-        
-        console.log(numberOfPositions, valueX, valueY,'**',horizontalDirection, verticalDirection)
         
         // UP RIGHT
         if ( verticalDirection && horizontalDirection) {
@@ -192,7 +186,6 @@ export default abstract class Piece {
 
         // UP LEFT
         if ( verticalDirection && !horizontalDirection) {
-            console.log('up left')
             for (let i = 1; i < numberOfPositions + 1; i++) {
                 
                 const setRank = (currentRank + i) as Rank;
@@ -228,5 +221,27 @@ export default abstract class Piece {
         return trajectory
     }
 
+    checkVerticalMovement( finalPosition: Position): boolean {
+
+        const currentPosition = this.position;
+        const movingVertically = currentPosition.getFile() == finalPosition.getFile();
+        return movingVertically;
+    }
+
+    checkHorizontalMovement( finalPosition: Position): boolean {
+
+        const currentPosition = this.position;
+        const movingHorizontally = currentPosition.getRank() == finalPosition.getRank();
+        return movingHorizontally;
+    }
+
+    checkDiagonalMovement( finalPosition: Position): boolean {
+        const movingDiagonally = 
+            !this.checkVerticalMovement( finalPosition ) && 
+            !this.checkHorizontalMovement( finalPosition ) ;
+        return movingDiagonally;
+    }
+    
+    abstract checkLock(position: Position): boolean;
     abstract canMove(position: Position): boolean;
 }

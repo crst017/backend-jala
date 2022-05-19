@@ -3,6 +3,34 @@ import Position from './position';
 
 export default class Pawn extends Piece {
 
+    checkLock(position: Position): boolean {
+
+        let pathPositions : Position[] = [];
+        
+        if( this.checkVerticalMovement(position)) {
+            pathPositions = this.calculateVerticalPath(position)
+        }
+
+        if( this.checkHorizontalMovement(position)) {
+            pathPositions = this.calculateHorizontalPath(position)
+        }
+
+        if( this.checkDiagonalMovement(position)) {
+            pathPositions = this.calculateDiagonalPath(position)
+        }
+
+        let positionIsLocked = false;
+
+        pathPositions.forEach( position => {
+            
+            if ( position.positionIsOccupied()) {
+                positionIsLocked = true;
+            } 
+        });
+
+        return positionIsLocked
+    }
+
     canMove(position: Position): boolean {
 
         const rank = this.position.getRank();
@@ -13,9 +41,14 @@ export default class Pawn extends Piece {
         if ( rank == 2 && color == 'White' ) inInitialPosition = true
         if ( rank == 7 && color == 'Black' ) inInitialPosition = true
 
-        return (
+        const movementIsLocked = this.checkLock(position);
+        const movementRules = 
             this.moveForward(position, 1) ||
-            ( this.moveForward(position, 2) && inInitialPosition )
+            ( this.moveForward(position, 2) && inInitialPosition );
+
+        return (
+            !movementIsLocked && 
+            movementRules
         );
     }
 

@@ -1,7 +1,10 @@
+import Game from '../../game';
 import Position from '../../position';
 import Rook from '../../rook';
 
 let rook = new Rook('White','A',1);
+
+Game.getGame(rook);
 
 it( 'Should move one place forward' , () => {
     let position = new Position('A',2);

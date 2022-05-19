@@ -1,7 +1,9 @@
 import Position from '../../position';
 import Knight from '../../knight';
+import Game from '../../game';
 
 let knight = new Knight('White','C',3);
+Game.getGame(knight);
 
 it( 'Should move two places forward and one to the left' , () => {
     let position = new Position('B',5);

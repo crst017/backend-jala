@@ -1,17 +1,16 @@
 import Game from "./game";
 import King from "./king";
+import Knight from "./knight";
 import Position from "./position";
 
-// const game = Game.getGame();
 
-const king = new King('White','C',1);
-console.log(king.canMove(new Position('C',2)))
-console.log(king.canMove(new Position('A',1)))
-console.log(king.canMove(new Position('D',1)))
-console.log(king.canMove(new Position('D',2)))
-console.log(king.canMove(new Position('C',3)))
-// console.log(king.canMove(new Position('B',2)))
-// console.log(king.canMove(new Position('B',2)))
-// console.log(king.canMove(new Position('B',2)))
-// console.log(king.canMove(new Position('B',2)))
-// console.log(king.canMove(new Position('B',2)))
+
+const king = new King('Black','E',8);
+const knight = new Knight('White','F',5);
+
+const game = Game.customGame( king, knight);
+console.log(game.showGame())
+
+// console.log(king.canMove(new Position('E',7)))
+console.log(knight.getPosition())
+console.log(knight.canMove(new Position('E',7)))

@@ -1,8 +1,11 @@
 import Position from '../../position';
 import Pawn from '../../pawn';
+import Game from '../../game';
 
 let whitePawn = new Pawn('White','C',2);
 let blackPawn = new Pawn('Black','G',7);
+
+Game.getGame(whitePawn, blackPawn);
 
 it( 'White pawn should move front 1 place' , () => {
     let position = new Position('C',3);

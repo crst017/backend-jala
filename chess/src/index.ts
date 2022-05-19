@@ -45,8 +45,7 @@ app.post('/movePiece', ( req , res ) => {
     let message = 'Successfully moved';
 
     if ( response ) {
-        
-        // game.verifyCheck(piece, moveTo)
+    
         if(piece.moveTo(moveTo)) {
             game.changeTurn();
             game.setGameStatus('Playing');
