@@ -1,6 +1,6 @@
-import Position from '../../position';
-import Knight from '../../knight';
-import Game from '../../game';
+import Position from '../../../position';
+import Knight from '../../../knight';
+import Game from '../../../game';
 
 let knight = new Knight('White','C',3);
 Game.getGame(knight);

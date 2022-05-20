@@ -1,6 +1,6 @@
-import Game from '../../game';
-import Position from '../../position';
-import Queen from '../../queen';
+import Game from '../../../game';
+import Position from '../../../position';
+import Queen from '../../../queen';
 
 let queen = new Queen('White','D',4);
 

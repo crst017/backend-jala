@@ -1,7 +1,7 @@
-import Position from '../../position';
-import Knight from '../../knight';
-import King from '../../king';
-import Game from '../../game';
+import Position from '../../../position';
+import Knight from '../../../knight';
+import King from '../../../king';
+import Game from '../../../game';
 
 
 const king = new King('White','E',1);
