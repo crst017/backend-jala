@@ -1,32 +1,44 @@
+import Game from './game';
 import Piece from './piece';
 import Position from './position';
+import { Color } from './types';
 
 export default class Pawn extends Piece {
 
     checkLock(position: Position): boolean {
 
-        let pathPositions : Position[] = [];
+        const gameInstance = Game.getGame();
+        let positionIsLocked = false;   
+
+        let lastPositionPiece !: Piece | undefined;
+        let lastPositionPieceColor !: Color | undefined;
         
-        if( this.checkVerticalMovement(position)) {
-            pathPositions = this.calculateVerticalPath(position)
+        
+        const lastPositionOccupied = position.positionIsOccupied();
+        const movingPieceColor = this.getPieceColor();
+        const currentPosition = {
+            currentPosition : position
         }
 
-        if( this.checkHorizontalMovement(position)) {
-            pathPositions = this.calculateHorizontalPath(position)
+        if( lastPositionOccupied ) {
+            lastPositionPiece = gameInstance.findPiece( currentPosition );
+            lastPositionPieceColor = lastPositionPiece?.getPieceColor();
         }
 
-        if( this.checkDiagonalMovement(position)) {
-            pathPositions = this.calculateDiagonalPath(position)
+        const lastPositionSameColor = lastPositionPieceColor == movingPieceColor;
+        const piecesSameFile = position.getFile() == this.getPosition().getFile();
+
+        if ( lastPositionOccupied && piecesSameFile) {
+            positionIsLocked = true;
         }
 
-        let positionIsLocked = false;
+        if ( lastPositionOccupied && lastPositionSameColor) {
+            positionIsLocked = true;
+        }
 
-        pathPositions.forEach( position => {
-            
-            if ( position.positionIsOccupied()) {
-                positionIsLocked = true;
-            } 
-        });
+        if ( !lastPositionOccupied && !piecesSameFile) {
+            positionIsLocked = true;
+        }
 
         return positionIsLocked
     }
@@ -41,9 +53,12 @@ export default class Pawn extends Piece {
         if ( rank == 2 && color == 'White' ) inInitialPosition = true
         if ( rank == 7 && color == 'Black' ) inInitialPosition = true
 
+
         const movementIsLocked = this.checkLock(position);
+
         const movementRules = 
             this.moveForward(position, 1) ||
+            (this.moveDiagonal(position, 1) ) ||
             ( this.moveForward(position, 2) && inInitialPosition );
 
         return (

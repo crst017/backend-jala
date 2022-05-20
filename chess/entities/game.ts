@@ -108,10 +108,12 @@ export default class Game {
     }
 
     findPiece( position: any ) {
-        
+
         let { currentPosition } = position
         currentPosition = currentPosition as Position
-        const pieceToMove = this.showGame().find( piece => {
+
+        const gameInstance = Game.getGame()
+        const pieceToMove = gameInstance.showGame().find( piece => {
             return (
                 piece.getPieceFile() == currentPosition.file &&
                 piece.getPieceRank() == currentPosition.rank

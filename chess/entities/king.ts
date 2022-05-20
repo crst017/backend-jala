@@ -1,34 +1,36 @@
 import Game from './game';
 import Piece from './piece';
 import Position from './position';
+import { Color } from './types';
 
 
 export default class King extends Piece {
 
     checkLock(position: Position): boolean {
         
-        let pathPositions : Position[] = [];
+        const gameInstance = Game.getGame();
+        let positionIsLocked = false;   
+
+        let lastPositionPiece !: Piece | undefined;
+        let lastPositionPieceColor !: Color | undefined;
         
-        if( this.checkVerticalMovement(position)) {
-            pathPositions = this.calculateVerticalPath(position)
-        }
-
-        if( this.checkHorizontalMovement(position)) {
-            pathPositions = this.calculateHorizontalPath(position)
-        }
-
-        if( this.checkDiagonalMovement(position)) {
-            pathPositions = this.calculateDiagonalPath(position)
-        }
         
-        let positionIsLocked = false;
+        const lastPositionOccupied = position.positionIsOccupied();
+        const movingPieceColor = this.getPieceColor();
+        const currentPosition = {
+            currentPosition : position
+        }
 
-        pathPositions.forEach( position => {
-            
-            if ( position.positionIsOccupied()) {
-                positionIsLocked = true;
-            } 
-        });
+        if( lastPositionOccupied ) {
+            lastPositionPiece = gameInstance.findPiece( currentPosition );
+            lastPositionPieceColor = lastPositionPiece?.getPieceColor();
+        }
+
+        const lastPositionSameColor = lastPositionPieceColor == movingPieceColor;
+
+        if ( lastPositionOccupied && lastPositionSameColor) {
+            positionIsLocked = true;
+        }
 
         return positionIsLocked
     }

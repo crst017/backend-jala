@@ -20,19 +20,18 @@ export default class Position {
 
         const gameInstance = Game.getGame()
         const gamePieces = gameInstance.getPieces()
-        let positionOccupied = false;
+        let positionOccupied = false; 
 
         gamePieces.forEach( piece => {
-            
+
             const sameRank = this.getRank() == piece.getPieceRank();
             const sameFile = this.getFile() == piece.getPosition().getFile();
+            const samePosition = sameRank && sameFile
 
-            if( sameRank && sameFile) {
+            if( samePosition ) {
                 positionOccupied = true;
             }
-        })
-        
+        })     
         return positionOccupied
     }
-
 }

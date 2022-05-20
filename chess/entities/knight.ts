@@ -1,12 +1,36 @@
+import Game from './game';
 import Piece from './piece';
 import Position from './position';
+import { Color } from './types';
 
 
 export default class Knight extends Piece {
 
     checkLock( position : Position): boolean {
-        const positionIsOccupied = position.positionIsOccupied();
-        return positionIsOccupied
+        const lastPositionOccupied = position.positionIsOccupied();
+        const gameInstance = Game.getGame();
+        let positionIsLocked = false;
+        
+        let lastPositionPiece !: Piece | undefined;
+        let lastPositionPieceColor !: Color | undefined;
+
+        const movingPieceColor = this.getPieceColor();
+        const currentPosition = {
+            currentPosition : position
+        }
+
+        if( lastPositionOccupied ) {
+            lastPositionPiece = gameInstance.findPiece( currentPosition );
+            lastPositionPieceColor = lastPositionPiece?.getPieceColor();
+        }
+        
+        const lastPositionSameColor = lastPositionPieceColor == movingPieceColor;
+        
+        if ( lastPositionOccupied && lastPositionSameColor) {
+            positionIsLocked = true;
+        }
+
+        return positionIsLocked
     }
 
     canMove(position: Position): boolean {

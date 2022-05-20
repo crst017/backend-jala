@@ -1,3 +1,4 @@
+import Game from './game';
 import Position from './position';
 import { File, Rank, Color } from './types';
 export default abstract class Piece {
@@ -17,6 +18,10 @@ export default abstract class Piece {
         return this.position
     }
 
+    getCapturedStatus() {
+        return this.isCaptured
+    }
+    
     getPieceRank() {
         return this.position.getRank()
     }
@@ -29,8 +34,10 @@ export default abstract class Piece {
         return this.color
     }
     
-    capturedPiece() {
-        this.isCaptured = !this.isCaptured 
+    capturePiece( capturedPiece: Piece | undefined ) {
+        if( capturedPiece ) {
+            capturedPiece.isCaptured = true; 
+        }
     }
 
     moveForward( position: Position, module : number = 8) {
@@ -85,10 +92,18 @@ export default abstract class Piece {
 
     moveTo(position: Position) {
 
+        const currentPosition = {
+            currentPosition : position
+        }
+        const gameInstance = Game.getGame();
+        const pieceInTargetPosition = gameInstance.findPiece( currentPosition )
+
         let moved = false;
         if (this.canMove( position )) {
+
+            this.capturePiece( pieceInTargetPosition );
             this.position = position;
-            moved = true
+            moved = true;
             return moved
         }
         return moved
@@ -121,6 +136,7 @@ export default abstract class Piece {
         }
 
         trajectory.shift();
+        trajectory.pop();
         return trajectory
     }
 
@@ -154,6 +170,7 @@ export default abstract class Piece {
         }
 
         trajectory.shift();
+        trajectory.pop();
         return trajectory
     }
 
@@ -218,11 +235,11 @@ export default abstract class Piece {
                 trajectory.push(newPosition);
             }
         }
+        trajectory.pop();
         return trajectory
     }
 
     checkVerticalMovement( finalPosition: Position): boolean {
-
         const currentPosition = this.position;
         const movingVertically = currentPosition.getFile() == finalPosition.getFile();
         return movingVertically;
