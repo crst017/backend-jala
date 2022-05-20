@@ -7,6 +7,11 @@ let blackPawn = new Pawn('Black','G',7);
 
 Game.getGame(whitePawn, blackPawn);
 
+it( 'White pawn should not move diagonally' , () => {
+    let position = new Position('D',3);
+    expect(whitePawn.canMove(position)).toBe(false);
+});
+
 it( 'White pawn should move front 1 place' , () => {
     let position = new Position('C',3);
     expect(whitePawn.canMove(position)).toBe(true);
