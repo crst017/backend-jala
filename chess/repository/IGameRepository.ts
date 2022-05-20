@@ -1,7 +1,7 @@
-import King from "../entities/king";
+import Game from "../entities/game";
 import { BaseRepository } from "./BaseRepository";
 
-export interface IKingRepository extends BaseRepository<King> {
+export interface IGameRepository extends BaseRepository<Game> {
 
     // find(item: King): Promise<King[]> 
 
