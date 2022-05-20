@@ -62,7 +62,7 @@ export default class King extends Piece {
         
         oponentPieces.forEach( piece => {
             if(!( piece instanceof King)) {
-                if ( piece.canMove(position) ) allowedToMove = false; // Check for all pieces but King
+                if ( piece.canMove(position) ) allowedToMove = false; 
             }
         })
 

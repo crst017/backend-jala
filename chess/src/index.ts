@@ -1,6 +1,12 @@
 import express from 'express';
+import { model } from 'mongoose';
 import Game from "../entities/game";
 import Position from '../entities/position';
+import run from '../infrastructure/mongodb'
+import gameSchema from '../infrastructure/mongodb/gameSchema';
+import IGame from '../infrastructure/mongodb/IGame';
+
+const GameDB = model<IGame>('GameDB', gameSchema);
 
 const app = express();
 app.use(express.json()); 
@@ -48,14 +54,22 @@ app.post('/movePiece', ( req , res ) => {
     
         if(piece.moveTo(moveTo)) {
             game.changeTurn();
+            game.increaseStep();
             game.setGameStatus('Playing');
+
+            const gameTurn = game.getGameTurn() === 'White' ? true : false;
+
+            const gameData = new GameDB({
+                status: game.showGameStatus(),
+                gameTurn: gameTurn,
+                step: game.getStep()
+            })
+            run( gameData ).catch(err => console.log(err));
         }
         else message = 'Cannot move into that position'
-
     } else {
         message = piece ? 'There is not a piece on that position' : 'It is not your turn'
     }
-
     res.status(200).send(message)
 });
 

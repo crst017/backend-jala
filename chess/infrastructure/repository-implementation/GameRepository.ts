@@ -1,8 +1,8 @@
 import { injectable } from "inversify";
-import King from "../../entities/king";
+import Game from "../../entities/game";
 import { BaseRepository } from "../../repository/BaseRepository";
 
 @injectable()
-export class KingRepository extends BaseRepository<King> {
+export class KingRepository extends BaseRepository<Game> {
  
 }

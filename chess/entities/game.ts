@@ -14,6 +14,7 @@ export default class Game {
     status: Status = 'Ready to start';
     gameTurn: boolean;
     private pieces: Piece[] = [];
+    private step: number;
     
 
     constructor( ...predefinedPieces : Piece[]) {
@@ -23,6 +24,7 @@ export default class Game {
             this.createDefaultPieces();
 
         this.gameTurn = true;
+        this.step = 0;
     }
 
     private createDefaultPieces() {
@@ -72,6 +74,14 @@ export default class Game {
         return Game.instance;
     }
 
+    increaseStep() {
+        this.step += 1;
+    }
+
+    getStep() {
+        return this.step;
+    }
+    
     showGame(): Piece[] {
         return this.pieces;
     }
@@ -89,6 +99,7 @@ export default class Game {
         this.createDefaultPieces();
         this.gameTurn = true;
         this.status = 'Ready to start';
+        this.step = 0
     }
 
     getGameTurn(): string {
