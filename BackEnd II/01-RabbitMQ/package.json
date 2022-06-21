@@ -1,0 +1,15 @@
+{
+  "name": "01-rabbitmq",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Cristian Navarro León <cristiannl.0117@gmail.com>",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
