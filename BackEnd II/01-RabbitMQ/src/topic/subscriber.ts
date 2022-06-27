@@ -26,7 +26,6 @@ amqp.connect({
         connection.createChannel( ( error1, channel ) => {
         
             channel.assertQueue(queue)
-
             channel.assertExchange(exchangeName, exchangeType)
             
             channel.bindQueue(queue, exchangeName, pattern)

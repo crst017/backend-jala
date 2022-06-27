@@ -23,7 +23,7 @@ amqp.connect({
         
         connection.createChannel( ( error1, channel ) => {
             
-            const message = 'Hello world 2';
+            const message = 'Hello world 4';
 
             channel.assertExchange( exchangeName, exchangeType );
 
