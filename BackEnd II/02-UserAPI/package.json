@@ -5,7 +5,7 @@
    "main": "index.js",
    "scripts": {
       "dev": "ts-node-dev --respawn src/index.ts",
-      "build" : "tsc",
+      "build": "tsc",
       "start": "node build/index.js",
       "typeorm": "typeorm-ts-node-commonjs"
    },
@@ -15,19 +15,25 @@
    "dependencies": {
       "cors": "^2.8.5",
       "express": "^4.18.1",
+      "inversify": "^6.0.1",
+      "inversify-express-utils": "^6.4.3",
+      "inversify-inject-decorators": "^3.1.0",
       "morgan": "^1.10.0",
       "mysql2": "^2.3.3",
+      "pg": "^8.4.0",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.3.6",
-      "pg": "^8.4.0"
+      "typeorm": "0.3.6"
    },
    "devDependencies": {
       "@types/cors": "^2.8.12",
       "@types/express": "^4.17.13",
+      "@types/inversify": "^2.0.33",
+      "@types/inversify-express-utils": "^2.0.0",
+      "@types/inversify-inject-decorators": "^2.0.0",
       "@types/morgan": "^1.9.3",
       "@types/node": "^16.11.10",
+      "ts-node": "10.7.0",
       "ts-node-dev": "^2.0.0",
-      "typescript": "4.5.2",
-      "ts-node": "10.7.0"
+      "typescript": "4.5.2"
    }
 }

@@ -3,13 +3,15 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
 @Entity()
 export class User extends BaseEntity {
 
-    @PrimaryGeneratedColumn()
-    id: number
+    @PrimaryGeneratedColumn("uuid")
+    id: string
 
     @Column()
     nickname: string
 
     @Column()
     fullname: string
-    
+
+    @Column({default: 0})
+    assistsNumber: number
 }
