@@ -1,15 +1,32 @@
-import express from 'express';
-import morgan from 'morgan';
+import 'reflect-metadata';
 import cors from 'cors';
+import morgan from 'morgan';
+import express, { Application } from "express";
+import { InversifyExpressServer } from "inversify-express-utils";
+import { container } from "./inversify.config";
+import './controller/user.controller';
 
-import userRoutes from './routes/user.routes';
+export class Server {
 
-const app = express();
+    private port: number = 3000;
+    private server: InversifyExpressServer;
 
-app.use(morgan('dev'));
-app.use(cors());
-app.use(express.json());
+    constructor() {
+        this.server = new InversifyExpressServer(container);
+        this.server.setConfig((app: Application) => {
+            app.use(express.urlencoded({extended: true}));
+            app.use(morgan('dev'));
+            app.use(cors());
+            app.use(express.json());
+        });
+    }
 
-app.use(userRoutes);
+    start() : void {
+        const api = this.server.build();
+        api.listen(this.port, ()=> {
+            console.log(`Server is listening on ${this.port} port.`);
+        });
+    }
+}
 
-export default app;
+

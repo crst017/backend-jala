@@ -1,21 +1,19 @@
 import "reflect-metadata";
-import app from './app';
-import { AppDataSource } from './data-source';
+import { Server } from "./app";
+import { AppDataSource } from './infrastructure/data.source';
 
 async function main () {
     
     try {
         
         await AppDataSource.initialize();
-        app.listen(3000, () => {
-            console.log("Listening on port 3000");
-        });
+        const server = new Server();
+        server.start();
         
     } catch (error) {
         console.log(error);
     }
 
 }
-
 
 main();

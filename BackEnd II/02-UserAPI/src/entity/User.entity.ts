@@ -13,5 +13,5 @@ export class User extends BaseEntity {
     fullname: string
 
     @Column({default: 0})
-    assistsNumber: number
+    totalAssistance: number
 }
