@@ -2,7 +2,8 @@ import { injectable } from "inversify";
 import { UserRepositoryInterface } from "../repository/user.repository.interface";
 import { User } from "../entity/user.entity";
 import { AppDataSource } from "./data.source";
-import { DeleteResult, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOperator, Like, Repository } from "typeorm";
+import { query } from "express";
 
 @injectable()
 export class UserRepositoryMySQL implements UserRepositoryInterface {
@@ -13,41 +14,51 @@ export class UserRepositoryMySQL implements UserRepositoryInterface {
         this.userRepository = AppDataSource.getRepository(User);
     }
     
+    
     async createUser(user: User): Promise<User> {
         return await this.userRepository.save(user);
     }
     
-    async getUsers(): Promise<User[]> {
-        return await this.userRepository.find();
+    async getUsers( filterParams ?: any): Promise<User[]> {
+        
+        const { nickname, fullname } = filterParams;
+        const query : FindManyOptions = {}
+        
+
+        query.where = {}
+
+        if( nickname ) {
+            query.where.nickname = Like (`%${nickname}%`)
+        }
+        if ( fullname ) {
+            query.where.fullname = Like (`%${fullname}%`)
+        }
+
+        return await this.userRepository.find( query );
     }
+
+    // find({
+    // where: [
+    //     { nickname: Like("%Timber%") },
+    //     { fullname: Like("%Timber%") },
+    // ] })
 
     async deleteUser(id: string): Promise<DeleteResult> {
         return await this.userRepository.delete(id);
     }
-    // async getUsers(): Promise<User[]> {
-        
-    //     const users = await this.userRepository.find();
-    //     return users
-    // }
 
-    // async getUserById(id: string): Promise<User | string> {
+    async getUserById(id: string): Promise<User>{
         
-    //     const user = await this.userRepository.findOneBy( {id: id});
-    //     if( !user ) return "";
-    //     return user
-    // }
+        const user = await this.userRepository.findOneBy( {id: id});
 
-    // async createUser(user: User): Promise<User> {
-        
-    //     await this.userRepository.save(user);
-    //     return user
-    // }
+        if(!user) throw new Error("User not found");
+        return user
+    }
+  
+}
+
+type QueryFilter = {
     
-    // async deleteUser(id: string): Promise<boolean> {
-        
-    //     const result = await this.userRepository.delete(id);
-    //     const response = result.affected !== 0
-    //     return response
-    // }
-    
+    nickname ?: FindOperator<string>,
+    fullname ?: FindOperator<string>
 }

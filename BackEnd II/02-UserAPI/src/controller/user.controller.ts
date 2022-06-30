@@ -28,8 +28,9 @@ export class UserController {
     @httpGet('/')
     private async getUsers(@request() req: Request, @response() res: Response) {
 
+        const { nickname, fullname } = req.query;
         try {
-            const users = await this.userService.getUsers();
+            const users = await this.userService.getUsers( {nickname, fullname} );
             res.status(200).json(users);
 
         } catch (error) {
@@ -37,6 +38,24 @@ export class UserController {
                 res.status(500).json({message: error.message});
             }
         }
+    }
+
+    @httpGet('/:id')
+    private async getUserById(@requestParam('id') id: string, @response() res: Response) {
+        
+        console.log("unitl here im ok");
+        
+        try {
+            
+            const user = await this.userService.getUserById(id);
+            return res.status(200).json(user);
+
+        } catch (error) {
+            if ( error instanceof Error) {
+                res.status(404).json({message: error.message});
+            }
+        }
+
     }
 
     @httpDelete('/:id')
@@ -89,23 +108,7 @@ export class UserController {
 //     }   
 // }
 
-// export const deleteUser = async ( req: Request, res : Response) => {
-//     try {
-        
-//         const { id } = req.params;
-//         const result = await User.delete({ id: id});
-        
-//         if( result.affected === 0 ) {
-//             return res.status(404).json({message: 'User not found'});
-//         }
-//         res.sendStatus(204);
 
-//     } catch (error) {
-//         if ( error instanceof Error) {
-//             res.status(500).json({message: error.message});
-//         }
-//     }   
-// }
 
 // export const getUserById = async ( req: Request, res: Response ) => {
 //     try {

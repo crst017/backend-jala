@@ -9,13 +9,17 @@ import { DeleteResult } from "typeorm";
 export class UserService implements UserServiceInterface{
 
     constructor( @inject(DI.UserRepositoryInterface) private userRepository: UserRepositoryInterface ) {}
+
+    getUserById(id: string): Promise<User> {
+        return this.userRepository.getUserById(id);
+    }
     
     createUser(user: User): Promise<User> {
         return this.userRepository.createUser(user);
     }
 
-    getUsers(): Promise<User[]> {
-        return this.userRepository.getUsers();
+    getUsers( filterParams ?: Object ): Promise<User[]> {
+        return this.userRepository.getUsers( filterParams );
     }
 
     deleteUser(id: string): Promise<DeleteResult> {
