@@ -27,14 +27,14 @@ export class UserRepositoryMySQL implements UserRepositoryInterface {
         query.where = []
 
         if( nickname ) {
-            query.where.push( { nickname : Like (`%${nickname}%`) } )
+            query.where.push( { nickname : Like (`%${nickname}%`) } );
         }
         if ( fullname ) {
-            query.where.push( { fullname : Like (`%${fullname}%`)} )
+            query.where.push( { fullname : Like (`%${fullname}%`)} );
         }
         
         query = query.where.length !== 0 ? query : {};
-        return await this.userRepository.find( query )
+        return await this.userRepository.find( query );
     }
 
 
