@@ -30,7 +30,7 @@ export class UserController {
 
         const { nickname, fullname } = req.query;
         try {
-            const users = await this.userService.getUsers( {nickname, fullname} );
+            const users = await this.userService.getUsers( { nickname, fullname } );
             res.status(200).json(users);
 
         } catch (error) {

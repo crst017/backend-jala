@@ -22,26 +22,21 @@ export class UserRepositoryMySQL implements UserRepositoryInterface {
     async getUsers( filterParams ?: any): Promise<User[]> {
         
         const { nickname, fullname } = filterParams;
-        const query : FindManyOptions = {}
         
-
-        query.where = {}
+        let query : FindManyOptions = {}
+        query.where = []
 
         if( nickname ) {
-            query.where.nickname = Like (`%${nickname}%`)
+            query.where.push( { nickname : Like (`%${nickname}%`) } )
         }
         if ( fullname ) {
-            query.where.fullname = Like (`%${fullname}%`)
+            query.where.push( { fullname : Like (`%${fullname}%`)} )
         }
-
-        return await this.userRepository.find( query );
+        
+        query = query.where.length !== 0 ? query : {};
+        return await this.userRepository.find( query )
     }
 
-    // find({
-    // where: [
-    //     { nickname: Like("%Timber%") },
-    //     { fullname: Like("%Timber%") },
-    // ] })
 
     async deleteUser(id: string): Promise<DeleteResult> {
         return await this.userRepository.delete(id);
