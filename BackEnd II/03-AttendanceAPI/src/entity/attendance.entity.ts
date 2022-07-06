@@ -1,20 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm"
+import { model, Schema } from "mongoose";
+import AttendanceInterface from "./attendance.interface";
 
-@Entity()
-export class Attendance extends BaseEntity {
+const attendanceSchema = new Schema<AttendanceInterface>({
+    userId: { type: String, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    date: { type: Date, required: true, default: Date.now},
+    notes: { type: String, required: false, default: ''}
+});
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+const AttendanceModel = model<AttendanceInterface>('AttendanceModel', attendanceSchema);
 
-    @Column()
-    startTime: string
-
-    @Column()
-    endTime: string
-
-    @Column()
-    date: string
-
-    @Column()
-    notes: string
-}
+export default AttendanceModel;

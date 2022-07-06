@@ -1,14 +1,13 @@
 import { Container } from "inversify";
-// import { UserRepositoryInterface } from "./repository/user.repository.interface";
-// import { UserRepositoryMySQL } from "./infrastructure/user.repository";
+import { AttendanceRepositoryInterface } from "./repository/attendance.repository.interface";
+import { AttendanceRepositoryMongo } from "./infrastructure/attendance.repository";
 
-// import { UserServiceInterface } from './service/user.service.interface';
-// import { UserService } from './service/user.service';
+import { AttendanceServiceInterface } from './service/attendance.service.interface';
+import { AttendanceService } from './service/attendance.service';
 
 import { DI } from "./inversify.types";
 
-
 export const container = new Container();
 
-// container.bind<UserRepositoryInterface>(DI.UserRepositoryInterface).to(UserRepositoryMySQL);
-// container.bind<UserServiceInterface>(DI.UserServiceInterface).to(UserService);
+container.bind<AttendanceRepositoryInterface>(DI.AttendanceRepositoryInterface).to(AttendanceRepositoryMongo);
+container.bind<AttendanceServiceInterface>(DI.AttendanceServiceInterface).to(AttendanceService);

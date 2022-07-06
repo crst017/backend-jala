@@ -1,5 +1,5 @@
 export const DI = {
 
-    UserServiceInterface: Symbol('UserServiceInterface'),
-    UserRepositoryInterface: Symbol('UserRepositoryInterface')
+    AttendanceServiceInterface: Symbol('AttendanceServiceInterface'),
+    AttendanceRepositoryInterface: Symbol('AttendanceRepositoryInterface')
 };

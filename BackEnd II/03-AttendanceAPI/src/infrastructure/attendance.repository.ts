@@ -1,23 +1,23 @@
 import { injectable } from "inversify";
-import { Repository } from "typeorm";
-import { Attendance } from "../entity/attendance.entity";
+import { Attendance } from "../entity/attendance";
+import AttendanceModel from "../entity/attendance.entity";
+import AttendanceInterface from "../entity/attendance.interface";
 import { AttendanceRepositoryInterface } from "../repository/attendance.repository.interface";
-import { AppDataSource } from "./data.source";
-
 
 
 @injectable()
 export class AttendanceRepositoryMongo implements AttendanceRepositoryInterface {
-    
-    private readonly attendanceRepository: Repository<Attendance>
 
-    constructor() {
-        this.attendanceRepository = AppDataSource.getRepository(Attendance);
-    }
+    async createAttendance(attendance: Attendance): Promise<AttendanceInterface> {
 
-    createAttendance(attendance: Attendance): Promise<Attendance> {
-        throw new Error("Method not implemented.");
-    }
+        const createAttendance = new AttendanceModel({
+            userId: attendance.userId,
+            startTime: attendance.startTime,
+            endTime: attendance.endTime,
+            date: attendance.date,
+            notes: attendance.notes
+        });
 
-    
+        return await createAttendance.save();
+    }   
 }

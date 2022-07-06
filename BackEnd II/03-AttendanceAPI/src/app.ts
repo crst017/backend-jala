@@ -4,7 +4,7 @@ import morgan from 'morgan';
 import express, { Application } from "express";
 import { InversifyExpressServer } from "inversify-express-utils";
 import { container } from "./inversify.config";
-// import './controller/user.controller';
+import './controller/attendance.controller';
 
 export class Server {
 

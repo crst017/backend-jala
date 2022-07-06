@@ -6,8 +6,7 @@ async function main () {
     
     try {
         
-        await AppDataSource
-        .initialize();
+        await AppDataSource.initialize();
         const server = new Server();
         server.start();
         

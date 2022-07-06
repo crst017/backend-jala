@@ -1,8 +1,8 @@
-import { DataSource } from "typeorm"
+import mongoose from "mongoose";
 
-export const AppDataSource = new DataSource({
-    type: "mongodb",
-    host: "localhost",
-    port: 27017,
-    database: "attendancedb"
-})
+export const AppDataSource = {
+    
+    async initialize() {
+        await mongoose.connect('mongodb://localhost:27017/attendancedb');
+    }
+}
