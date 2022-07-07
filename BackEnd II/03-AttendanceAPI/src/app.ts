@@ -8,7 +8,7 @@ import './controller/attendance.controller';
 
 export class Server {
 
-    private port: number = 3000;
+    private port: number = 3001;
     private server: InversifyExpressServer;
 
     constructor() {

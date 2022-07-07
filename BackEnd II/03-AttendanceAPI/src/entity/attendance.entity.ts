@@ -9,6 +9,4 @@ const attendanceSchema = new Schema<AttendanceInterface>({
     notes: { type: String, required: false, default: ''}
 });
 
-const AttendanceModel = model<AttendanceInterface>('AttendanceModel', attendanceSchema);
-
-export default AttendanceModel;
+export const AttendanceModel = model<AttendanceInterface>('AttendanceModel', attendanceSchema);

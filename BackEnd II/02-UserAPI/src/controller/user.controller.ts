@@ -42,9 +42,7 @@ export class UserController {
 
     @httpGet('/:id')
     private async getUserById(@requestParam('id') id: string, @response() res: Response) {
-        
-        console.log("unitl here im ok");
-        
+
         try {
             
             const user = await this.userService.getUserById(id);
