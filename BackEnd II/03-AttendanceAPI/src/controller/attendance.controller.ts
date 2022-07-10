@@ -43,6 +43,20 @@ export class AttendanceController {
     }
 
     @httpGet('/:id')
+    async getAttendanceById(@requestParam('id') id: string, @response() res: Response) {
+   
+        try {
+            const attendance = await this.attendanceService.getAttendanceById(id);
+            res.status(200).json(attendance);
+            
+        } catch( error ) {
+            if ( error instanceof Error) {
+                res.status(404).json({message: error.message});
+            }
+        }   
+    }
+
+    @httpGet('/users/:id')
     async getAttendancesByUserId(@requestParam('id') id: string, @response() res: Response) {
    
         try {
@@ -55,7 +69,6 @@ export class AttendanceController {
                 res.status(404).json({message: error.message});
             }
         }   
-        
     }
 
     @httpDelete('/:id')

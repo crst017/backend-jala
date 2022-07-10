@@ -7,6 +7,7 @@ import { AttendanceRepositoryInterface } from "../repository/attendance.reposito
 
 @injectable()
 export class AttendanceRepositoryMongo implements AttendanceRepositoryInterface {
+    
 
     async createAttendance(attendance: Attendance): Promise<AttendanceInterface> {
 
@@ -23,6 +24,12 @@ export class AttendanceRepositoryMongo implements AttendanceRepositoryInterface 
 
     async getAttendances(): Promise<AttendanceInterface[]> {
         return await AttendanceModel.find(); 
+    }
+
+    async getAttendanceById(id: string): Promise<AttendanceInterface> {
+        const assistance = await AttendanceModel.findOne( {_id : id} );
+        if(!assistance) throw new Error("Assistance not found");
+        return assistance
     }
 
     async getAttendancesByUser( id: string ): Promise<AttendanceInterface[]> {
