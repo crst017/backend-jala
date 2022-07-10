@@ -39,7 +39,7 @@ export class AttendanceRepositoryMongo implements AttendanceRepositoryInterface 
     async deleteAttendancesByUser(id: string): Promise<number> {
         
         const res = await AttendanceModel.deleteMany( {userId : id});
-        if ( res.deletedCount > 0 ) return res.deletedCount
+        if ( res.deletedCount >= 0 ) return res.deletedCount
         throw new Error('User not found')
     }
 }

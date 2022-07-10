@@ -17,7 +17,7 @@ export class AttendanceService implements AttendanceServiceInterface {
     async createAttendance(attendance: Attendance): Promise<AttendanceInterface> {
         
         const userId = attendance.userId;
-        await this.userService.getUser( userId );
+        await this.userService.getUser( userId ); 
         return await this.attendanceRepository.createAttendance( attendance );
     }
 

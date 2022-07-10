@@ -60,13 +60,13 @@ export class UserController {
     private async deleteUser(@requestParam('id') id: string, @response() res: Response) {
         
         try {
-            
+            console.log("delete user")
             const result = await this.userService.deleteUser(id);
             
             if( result.affected === 0 ) {
                 res.status(404).json({message: 'User not found'});
             } else {
-                res.status(204).json(result);
+                res.status(200).json({message: 'User successfully deleted'});
             }
 
         } catch (error) {

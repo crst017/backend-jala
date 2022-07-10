@@ -78,14 +78,13 @@ export class AttendanceController {
    
         try {
             const deleteCount = await this.attendanceService.deleteAttendancesByUser(id);
-            if ( deleteCount ) res.status(200).json({message: deleteCount + ' attendance(s) were successfully deleted'});
-            
+            console.log(deleteCount)
+            if ( deleteCount > 0) res.status(200).json({message: deleteCount + ' attendance(s) were successfully deleted'});
+            if ( deleteCount == 0) res.status(200).json({message: 'No assistances were found for this user'});
         } catch( error ) {
             if ( error instanceof Error) {
                 res.status(404).json({message: error.message});
             }
         }   
-        
     }
-
 }
