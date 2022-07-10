@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { UserServiceInterface } from '../service/user.service.interface';
 import { DI } from '../inversify.types';
 import { inject } from "inversify";
-import { controller, httpPost, httpDelete, request, response, requestParam, httpGet } from "inversify-express-utils";
+import { controller, httpPost, httpDelete, request, response, requestParam, httpGet, httpPut } from "inversify-express-utils";
 
 @controller('/users')
 export class UserController {
@@ -16,7 +16,7 @@ export class UserController {
         try {
             const user = req.body;
             const response = await this.userService.createUser(user);
-            res.status(201).json(user);
+            res.status(201).json(response);
 
         } catch (error) {
             if ( error instanceof Error) {
@@ -56,11 +56,25 @@ export class UserController {
 
     }
 
+    @httpPut('/:id')
+    private async updateUser(@request() req: Request, @response() res: Response) {
+        try {
+            const  userId  = req.params.id;
+            const { totalAssistance } = req.body;
+            const response = await this.userService.updateUser( userId, totalAssistance);
+            res.status(200).json(response);
+
+        } catch (error) {
+            if ( error instanceof Error) {
+                res.status(400).json({message: error.message});
+            }
+        }
+    }
+
     @httpDelete('/:id')
     private async deleteUser(@requestParam('id') id: string, @response() res: Response) {
         
         try {
-            console.log("delete user")
             const result = await this.userService.deleteUser(id);
             
             if( result.affected === 0 ) {
@@ -77,50 +91,4 @@ export class UserController {
     };
 
 }
-// import { equal } from "assert";
-// import { Request, Response } from "express";
-// import { User } from "../entity/user.entity";
-
-
-// export const updateUser = async ( req: Request, res : Response) => {
-//     try {
-        
-//         const { id } = req.params;
-//         const { nickname, fullname } = req.body;
-
-//         const user = await User.findOneBy({id: id});
-
-//         if( !user ) return res.status(404).json({message: "User does not exists"});
-
-//         await User.update({id: id}, {
-//             nickname,
-//             fullname
-//         } )
-        
-//         res.sendStatus(204);
-
-//     } catch (error) {
-//         if ( error instanceof Error) {
-//             res.status(500).json({message: error.message});
-//         }
-//     }   
-// }
-
-
-
-// export const getUserById = async ( req: Request, res: Response ) => {
-//     try {
-        
-//         const { id } = req.params;
-//         const user = await User.findOneBy({id: id});
-//         if( !user ) return res.status(404).json({message: "User does not exists"});
-
-//         return res.status(200).json(user);
-
-//     } catch (error) {
-//         if ( error instanceof Error) {
-//             res.status(500).json({message: error.message});
-//         }
-//     }
-// }
 

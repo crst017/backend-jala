@@ -8,5 +8,5 @@ export interface UserServiceInterface {
     getUsers( filterParams ?: Object ): Promise<User[]>;
     getUserById( id: string ) : Promise<UserResponse>;
     deleteUser(id: string): Promise<DeleteResult>
-
+    updateUser(id: string, totalAssistance: number): Promise<unknown>
 }

@@ -49,6 +49,13 @@ export class UserRepositoryMySQL implements UserRepositoryInterface {
         if(!user) throw new Error("User not found");
         return user
     }
+
+    async updateUser(id: string, totalAssistance: number): Promise<unknown> {
+        const user = await this.getUserById(id);
+        user.totalAssistance = totalAssistance
+        const modifiedUser = await this.userRepository.save(user);
+        return modifiedUser
+    }
   
 }
 

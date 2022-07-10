@@ -7,6 +7,6 @@ export interface UserRepositoryInterface {
     getUserById( id: string ) : Promise<User>;
     createUser( user: User ) : Promise<User>;
     deleteUser( id: string ) : Promise<DeleteResult>;
-
+    updateUser( id: string, totalAssistance: number ) : Promise<unknown>
 }
 

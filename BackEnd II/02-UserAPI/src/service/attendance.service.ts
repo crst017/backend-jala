@@ -16,7 +16,7 @@ export class AttendanceService {
     async attendanceList( id: string): Promise<Assistance[]> {
 
         try {
-            const attendanceList: Assistance[] = await axios.get(`${this.apiUrl}/${id}`);
+            const attendanceList: Assistance[] = await axios.get(`${this.apiUrl}/users/${id}`);
             return attendanceList
 
         } catch ( error : any) {
@@ -26,7 +26,7 @@ export class AttendanceService {
     }
 
     async deleteAssistanceOfUser( id: string) {
-        
+
         try {
             await axios.delete(`${this.apiUrl}/users/${id}`);
         } catch ( error: any) {

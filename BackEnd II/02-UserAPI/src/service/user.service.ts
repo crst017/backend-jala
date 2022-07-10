@@ -17,6 +17,7 @@ export class UserService implements UserServiceInterface{
     ) {}
 
     async getUserById(id: string): Promise<UserResponse> {
+
         const user = await this.userRepository.getUserById(id);
         const attendanceList : any = await this.attendanceService.attendanceList(id);
         const userResponse : any = user;
@@ -35,5 +36,9 @@ export class UserService implements UserServiceInterface{
     async deleteUser(id: string): Promise<DeleteResult> {
         await this.attendanceService.deleteAssistanceOfUser(id);
         return this.userRepository.deleteUser(id);
+    }
+
+    async updateUser(id: string, totalAssistance: number): Promise<unknown> {
+        return this.userRepository.updateUser(id, totalAssistance);
     }
 }
